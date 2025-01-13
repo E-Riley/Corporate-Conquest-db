@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS corporate_conquest_leaderboard;
+CREATE DATABASE corporate_conquest_leaderboard;
+
+DROP DATABASE IF EXISTS corporate_conquest_leaderboard_test;
+CREATE DATABASE corporate_conquest_leaderboard_test;
