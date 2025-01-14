@@ -1,0 +1,120 @@
+{
+  "endpoints": {
+    "/api/players": {
+      "GET": {
+        "description": "Fetches a list of all players.",
+        "example_response": [
+          {
+            "player_id": 1,
+            "player_name": "Alice",
+            "email": "alice@example.com"
+          },
+          {
+            "player_id": 2,
+            "player_name": "Bob",
+            "email": "bob@example.com"
+          }
+        ]
+      },
+      "POST": {
+        "description": "Adds a new player to the database.",
+        "example_request": {
+          "player_name": "Eve",
+          "email": "eve@example.com"
+        },
+        "example_response": {
+          "player_id": 5,
+          "player_name": "Eve",
+          "email": "eve@example.com"
+        }
+      }
+    },
+    "/api/levels": {
+      "GET": {
+        "description": "Fetches a list of all levels.",
+        "example_response": [
+          {
+            "level_id": 1,
+            "level_name": "Cubicle Catastrophe",
+            "description": "Survive the endless stack of paperwork."
+          },
+          {
+            "level_id": 2,
+            "level_name": "Conference Room Chaos",
+            "description": "Escape the never-ending meeting."
+          }
+        ]
+      }
+    },
+    "/api/classes": {
+      "GET": {
+        "description": "Fetches a list of all classes.",
+        "example_response": [
+          {
+            "class_id": 1,
+            "class_name": "HR Enforcer",
+            "description": "Manages disputes with authority."
+          },
+          {
+            "class_id": 2,
+            "class_name": "Intern Assassin",
+            "description": "Completes tasks silently and efficiently."
+          }
+        ]
+      }
+    },
+    "/api/leaderboard": {
+      "GET": {
+        "description": "Fetches the leaderboard entries, optionally filtered by level or class.",
+        "query_parameters": {
+          "level_id": "Filter leaderboard entries by level ID.",
+          "class_id": "Filter leaderboard entries by class ID."
+        },
+        "example_request": "/api/leaderboard?level_id=1&class_id=2",
+        "example_response": [
+          {
+            "leaderboard_id": 1,
+            "player_name": "Alice",
+            "level_name": "Cubicle Catastrophe",
+            "class_name": "Intern Assassin",
+            "score": 1200,
+            "completion_time": "00:15:30"
+          },
+          {
+            "leaderboard_id": 2,
+            "player_name": "Bob",
+            "level_name": "Cubicle Catastrophe",
+            "class_name": "HR Enforcer",
+            "score": 1100,
+            "completion_time": "00:16:45"
+          }
+        ]
+      },
+      "POST": {
+        "description": "Adds a new leaderboard entry.",
+        "example_request": {
+          "player_id": 3,
+          "level_id": 1,
+          "class_id": 2,
+          "score": 1350,
+          "completion_time": "00:14:20"
+        },
+        "example_response": {
+          "leaderboard_id": 5,
+          "player_id": 3,
+          "level_id": 1,
+          "class_id": 2,
+          "score": 1350,
+          "completion_time": "00:14:20"
+        }
+      },
+      "DELETE": {
+        "description": "Deletes a leaderboard entry by its ID.",
+        "example_request": "/api/leaderboard/5",
+        "example_response": {
+          "msg": "Entry deleted"
+        }
+      }
+    }
+  }
+}
