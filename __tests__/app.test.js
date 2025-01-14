@@ -92,3 +92,68 @@ describe("GET /api/levels", () => {
       });
   });
 });
+
+describe("GET /api/levels", () => {
+  test("200: Responds with an array of level objects with a key of level_name and description", () => {
+    return request(app)
+      .get("/api/levels")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.levels).toHaveLength(4);
+        body.levels.forEach((level) => {
+          expect(level).toMatchObject({
+            level_name: expect.any(String),
+            description: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET /api/leaderboard", () => {
+  test("200: Responds with an array of leaderboard objects", () => {
+    return request(app)
+      .get("/api/leaderboard")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.leaderboards).toHaveLength(4);
+        body.leaderboards.forEach((highScore) => {
+          expect(highScore).toMatchObject({
+            player_id: expect.any(Number),
+            level_id: expect.any(Number),
+            class_id: expect.any(Number),
+            score: expect.any(Number),
+            completion_time: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("POST /api/leaderboard", () => {
+  test("201: responds with a newly created player object", () => {
+    const newScore = {
+      player_id: 45,
+      level_id: 1,
+      class_id: 3,
+      score: 1300,
+      completion_time: "00:12:45",
+    };
+
+    return request(app)
+      .post(`/api/leaderboard`)
+      .send(newScore)
+      .expect(201)
+      .then(({ body: { leaderboards } }) => {
+        expect(leaderboards).toEqual(
+          expect.objectContaining({
+            player_id: 45,
+            level_id: 1,
+            class_id: 3,
+            score: 1300,
+            completion_time: "00:12:45",
+          })
+        );
+      });
+  });
+});
