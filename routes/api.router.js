@@ -8,9 +8,9 @@ const { getEndpoints } = require("../controllers/api.controllers");
 const apiRouter = express.Router();
 
 apiRouter.get("/", getEndpoints);
-apiRouter.get("/players", playerRouter);
-apiRouter.get("/classes", classesRouter);
-apiRouter.get("/levels", levelsRouter);
-apiRouter.get("/leaderboard", leaderboardRouter);
+apiRouter.use("/players", playerRouter);
+apiRouter.use("/classes", classesRouter);
+// apiRouter.use("/levels", levelsRouter);
+// apiRouter.use("/leaderboard", leaderboardRouter);
 
 module.exports = apiRouter;

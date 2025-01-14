@@ -4,3 +4,5 @@ const playersRouter = express.Router();
 
 playersRouter.get("/", getPlayers);
 playersRouter.post("/", postPlayer);
+
+module.exports = playersRouter;
