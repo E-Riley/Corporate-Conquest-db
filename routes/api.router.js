@@ -10,7 +10,7 @@ const apiRouter = express.Router();
 apiRouter.get("/", getEndpoints);
 apiRouter.use("/players", playerRouter);
 apiRouter.use("/classes", classesRouter);
-// apiRouter.use("/levels", levelsRouter);
+apiRouter.use("/levels", levelsRouter);
 // apiRouter.use("/leaderboard", leaderboardRouter);
 
 module.exports = apiRouter;
