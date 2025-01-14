@@ -157,3 +157,23 @@ describe("POST /api/leaderboard", () => {
       });
   });
 });
+
+describe("GET /api/leaderboard", () => {
+  test("200: Responds with an array of leaderboard objects", () => {
+    return request(app)
+      .get("/api/leaderboard")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.leaderboards).toHaveLength(4);
+        body.leaderboards.forEach((highScore) => {
+          expect(highScore).toMatchObject({
+            player_id: expect.any(Number),
+            level_id: expect.any(Number),
+            class_id: expect.any(Number),
+            score: expect.any(Number),
+            completion_time: expect.any(String),
+          });
+        });
+      });
+  });
+});
