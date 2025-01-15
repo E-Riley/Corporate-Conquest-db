@@ -32,7 +32,10 @@ describe("GET /api/players", () => {
         expect(body.players).toHaveLength(4);
         body.players.forEach((player) => {
           expect(player).toMatchObject({
+            player_id: expect.any(Number),
             player_name: expect.any(String),
+            email: expect.any(String),
+            created_at: expect.any(String),
           });
         });
       });
@@ -43,6 +46,8 @@ describe("POST /api/players", () => {
   test("201: responds with a newly created player object", () => {
     const newPlayer = {
       player_name: "mike",
+      email: "mike@example.com",
+      password: "MikesHashedPassword",
     };
 
     return request(app)
@@ -53,6 +58,8 @@ describe("POST /api/players", () => {
         expect(player).toEqual(
           expect.objectContaining({
             player_name: "mike",
+            email: "mike@example.com",
+            password: "MikesHashedPassword",
           })
         );
       });
@@ -89,6 +96,62 @@ describe("GET /api/levels", () => {
             description: expect.any(String),
           });
         });
+      });
+  });
+});
+
+describe("GET /api/leaderboard", () => {
+  test("200: responds with a leaderboard object, sorted by score", () => {
+    return request(app)
+      .get("/api/leaderboard")
+      .then(({ body: { entries } }) => {
+        expect(entries).toHaveLength(4);
+      });
+  });
+
+  test("200: Responds with an array of leaderboard entries filtered by level_id", () => {
+    return request(app)
+      .get(`/api/leaderboard?level_id=2`)
+      .expect(200)
+      .then(({ body: { entries } }) => {
+        expect(entries).toBeInstanceOf(Array);
+        entries.forEach((entry) => {
+          expect(entry).toMatchObject({
+            entry_id: expect.any(Number),
+            player_id: expect.any(Number),
+            level_id: 2,
+            score: expect.any(Number),
+          });
+        });
+      });
+  });
+});
+
+describe("POST /api/leaderboard", () => {
+  test("201: Responds with a newly created leaderboard entry", () => {
+    const newEntry = {
+      player_id: 1,
+      level_id: 2,
+      class_id: 1,
+      score: 2500,
+      completion_time: "00:02:33",
+    };
+
+    return request(app)
+      .post("/api/leaderboard")
+      .send(newEntry)
+      .expect(201)
+      .then(({ body: { entry } }) => {
+        expect(entry).toEqual(
+          expect.objectContaining({
+            entry_id: expect.any(Number),
+            player_id: 1,
+            level_id: 2,
+            class_id: 1,
+            score: 2500,
+            completion_time: "00:02:33",
+          })
+        );
       });
   });
 });

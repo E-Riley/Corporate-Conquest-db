@@ -10,10 +10,9 @@ exports.getPlayers = (req, res, next) => {
 
 exports.postPlayer = (req, res, next) => {
   const {
-    body: { player_name },
+    body: { player_name, email, password },
   } = req;
-
-  insertPlayer(player_name)
+  insertPlayer(player_name, email, password)
     .then((player) => {
       res.status(201).send({ player });
     })

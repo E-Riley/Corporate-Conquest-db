@@ -18,6 +18,8 @@ const seed = ({ playerData, levelData, classData, leaderboardData }) => {
       return db.query(`CREATE TABLE players (
             player_id SERIAL PRIMARY KEY,
             player_name VARCHAR(100) NOT NULL UNIQUE,
+            email VARCHAR(150) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`);
     })
@@ -49,7 +51,7 @@ const seed = ({ playerData, levelData, classData, leaderboardData }) => {
     })
     .then(() => {
       const formatSql = format(
-        `INSERT INTO players (player_name) VALUES %L RETURNING *;`,
+        `INSERT INTO players (player_name, email, password) VALUES %L RETURNING *;`,
         formatData(playerData)
       );
       return db.query(formatSql);
