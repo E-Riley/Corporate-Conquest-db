@@ -54,6 +54,7 @@ const seed = ({ playerData, levelData, classData, leaderboardData }) => {
         `INSERT INTO players (player_name, email, password) VALUES %L RETURNING *;`,
         formatData(playerData)
       );
+      console.log(formatSql)
       return db.query(formatSql);
     })
     .then(() => {
