@@ -1,26 +1,18 @@
 const express = require("express");
 const apiRouter = require("./routes/api.router");
+
 const cors = require('cors');
-const {
-  psqlErrorHandler,
-  customErrorHandler,
-  serverErrorHandler,
-} = require("./errors");
 const passport = require('passport');
 const dotenv = require('dotenv');
 const playersRouter = require('./routes/players.router.js')
 
 dotenv.config(); 
 
-
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 require('./db/passport')(passport);
-app.use(cors());
-app.use(psqlErrorHandler);
-app.use(customErrorHandler);
-app.use(serverErrorHandler);
 
 app.use('/', playersRouter)
 
