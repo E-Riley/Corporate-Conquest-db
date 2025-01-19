@@ -11,7 +11,7 @@ const options = {
     passport.use(
       new Strategy(options, async (jwt_payload, done) => {
         try {
-          const user = await db.query('SELECT id, username FROM users WHERE id = $1', [jwt_payload.id]);
+          const user = await db.query('SELECT id, player_name FROM players WHERE id = $1', [jwt_payload.id]);
           if (user.rows.length > 0) {
             return done(null, user.rows[0]);
           }
