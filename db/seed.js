@@ -6,13 +6,13 @@ const seed = ({ playerData, levelData, classData, leaderboardData }) => {
   return db
     .query(`DROP TABLE IF EXISTS leaderboard;`)
     .then(() => {
-      return db.query(`DROP TABLE IF EXISTS players;`);
+      return db.query(`DROP TABLE IF EXISTS classes;`);
     })
     .then(() => {
       return db.query(`DROP TABLE IF EXISTS levels;`);
     })
     .then(() => {
-      return db.query(`DROP TABLE IF EXISTS classes;`);
+      return db.query(`DROP TABLE IF EXISTS players;`);
     })
     .then(() => {
       return db.query(`CREATE TABLE players (
@@ -54,7 +54,7 @@ const seed = ({ playerData, levelData, classData, leaderboardData }) => {
         `INSERT INTO players (player_name, email, password) VALUES %L RETURNING *;`,
         formatData(playerData)
       );
-      console.log(formatSql)
+      console.log(formatSql);
       return db.query(formatSql);
     })
     .then(() => {
